@@ -9,17 +9,14 @@ export function createTaskRoutes(taskRepository: TaskRepository): Router {
   // Crear una nueva tarea
   router.post('/', taskController.createTask.bind(taskController));
 
-  // Obtener tareas por ID de usuario (usando query parameter)
+  // Obtener tareas por ID de usuario
   router.get('/user', taskController.getTasksByUserId.bind(taskController));
 
-  // Actualizar una tarea
-  router.put('/:id', taskController.updateTask.bind(taskController));
+  // Actualizar una tarea (usando query parameter)
+  router.put('/', taskController.updateTask.bind(taskController));
 
-  // Eliminar una tarea
-  router.delete('/:id', taskController.deleteTask.bind(taskController));
-
-  // Actualizar estado de una tarea
-  router.patch('/:id/status', taskController.updateTaskStatus.bind(taskController));
+  // Eliminar una tarea (usando query parameter)
+  router.delete('/', taskController.deleteTask.bind(taskController));
 
   return router;
 } 

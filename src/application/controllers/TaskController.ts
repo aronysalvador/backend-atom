@@ -67,8 +67,13 @@ export class TaskController {
 
   async updateTask(req: Request, res: Response): Promise<void> {
     try {
-      const { id } = req.params;
+      const { id } = req.query;
       const { title, description, status, priority } = req.body;
+
+      if (!id || typeof id !== 'string') {
+        res.status(400).json({ error: 'Task id is required as a query parameter' });
+        return;
+      }
 
       if (status && !['pending', 'completed'].includes(status)) {
         res.status(400).json({ error: 'Status must be either pending or completed' });
@@ -102,7 +107,13 @@ export class TaskController {
 
   async deleteTask(req: Request, res: Response): Promise<void> {
     try {
-      const { id } = req.params;
+      const { id } = req.query;
+
+      if (!id || typeof id !== 'string') {
+        res.status(400).json({ error: 'Task id is required as a query parameter' });
+        return;
+      }
+
       const success = await this.taskRepository.delete(id);
       
       if (!success) {
@@ -110,32 +121,9 @@ export class TaskController {
         return;
       }
       
-      res.status(204).send();
+      res.status(200).send();
     } catch (error) {
       res.status(500).json({ error: 'Error deleting task' });
-    }
-  }   
-
-  async updateTaskStatus(req: Request, res: Response): Promise<void> {
-    try {
-      const { id } = req.params;
-      const { status } = req.body;
-
-      if (!['pending', 'completed'].includes(status)) {
-        res.status(400).json({ error: 'Status must be either pending or completed' });
-        return;
-      }
-
-      const updatedTask = await this.taskRepository.updateStatus(id, status);
-      
-      if (!updatedTask) {
-        res.status(404).json({ error: 'Task not found' });
-        return;
-      }
-      
-      res.json(updatedTask);
-    } catch (error) {
-      res.status(500).json({ error: 'Error updating task status' });
     }
   }
 } 
