@@ -9,8 +9,8 @@ export function createTaskRoutes(taskRepository: TaskRepository): Router {
   // Crear una nueva tarea
   router.post('/', taskController.createTask.bind(taskController));
 
-  // Obtener tareas por ID de usuario
-  router.get('/user/:userId', taskController.getTasksByUserId.bind(taskController));
+  // Obtener tareas por ID de usuario (usando query parameter)
+  router.get('/user', taskController.getTasksByUserId.bind(taskController));
 
   // Actualizar una tarea
   router.put('/:id', taskController.updateTask.bind(taskController));

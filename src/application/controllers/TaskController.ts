@@ -51,7 +51,13 @@ export class TaskController {
 
   async getTasksByUserId(req: Request, res: Response): Promise<void> {
     try {
-      const { userId } = req.params;
+      const { userId } = req.query;
+
+      if (!userId || typeof userId !== 'string') {
+        res.status(400).json({ error: 'userId is required as a query parameter' });
+        return;
+      }
+
       const tasks = await this.taskRepository.findByUserId(userId);
       res.json(tasks);
     } catch (error) {

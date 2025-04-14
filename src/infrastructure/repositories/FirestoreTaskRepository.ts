@@ -21,15 +21,21 @@ export class FirestoreTaskRepository implements TaskRepository {
   }
 
   async findByUserId(userId: string): Promise<Task[]> {
-    const snapshot = await db.collection(this.collection)
-      .where('userId', '==', userId)
-      .orderBy('createdAt', 'desc')
-      .get();
-      
-    return snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    })) as Task[];
+    try {
+      const snapshot = await db.collection(this.collection)
+        .where('userId', '==', userId)
+        // Temporalmente comentado mientras se construye el índice
+        // .orderBy('createdAt', 'desc')
+        .get();
+        
+      return snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })) as Task[];
+    } catch (error) {
+      console.error('Error getting tasks:', error);
+      return [];
+    }
   }
 
   async update(id: string, task: Partial<Task>): Promise<Task | null> {
