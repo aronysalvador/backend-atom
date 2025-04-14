@@ -65,7 +65,15 @@ export class UserController {
 
   async getUserByUserId(req: Request, res: Response): Promise<void> {
     try {
-      const { userId } = req.params;
+      const { userId } = req.query;
+
+      if (!userId || typeof userId !== 'string') {
+        // Si no hay userId en el query, devolver todos los usuarios
+        const users = await this.userRepository.findAll();
+        res.json(users);
+        return;
+      }
+
       const user = await this.userRepository.findByUserId(userId);
       
       if (!user) {
