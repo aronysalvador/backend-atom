@@ -41,6 +41,21 @@ export class FirestoreUserRepository implements UserRepository {
     } as User;
   }
 
+  async findByUserId(userId: string): Promise<User | null> {
+    const snapshot = await db.collection(this.collection)
+      .where('userId', '==', userId)
+      .limit(1)
+      .get();
+    
+    if (snapshot.empty) return null;
+    
+    const doc = snapshot.docs[0];
+    return {
+      id: doc.id,
+      ...doc.data()
+    } as User;
+  }
+
   async findAll(): Promise<User[]> {
     const snapshot = await db.collection(this.collection).get();
     return snapshot.docs.map(doc => ({
