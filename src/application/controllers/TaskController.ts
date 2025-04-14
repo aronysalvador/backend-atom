@@ -114,7 +114,7 @@ export class TaskController {
     } catch (error) {
       res.status(500).json({ error: 'Error deleting task' });
     }
-  }
+  }   
 
   async updateTaskStatus(req: Request, res: Response): Promise<void> {
     try {
