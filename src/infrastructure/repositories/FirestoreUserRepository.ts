@@ -34,7 +34,6 @@ export class FirestoreUserRepository implements UserRepository {
   async findById(id: string): Promise<User | null> {
     const doc = await db.collection(this.collection).doc(id).get();
     if (!doc.exists) return null;
-    
     return {
       id: doc.id,
       ...doc.data()
