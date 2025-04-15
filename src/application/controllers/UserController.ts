@@ -63,7 +63,7 @@ export class UserController {
         userId: userId.trim(),
         name: name.trim(),
         lastName: lastName.trim(),
-        dateBirth: dateBirth.trim(),
+        dateBirth: dateBirth instanceof Date ? dateBirth : new Date(dateBirth),
         createdAt: new Date()
       };
 
