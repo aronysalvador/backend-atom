@@ -1,6 +1,10 @@
 # Backend Hexagonal con Express y Firebase
 
-Backend desarrollado con arquitectura hexagonal usando Express y Firebase Firestore.
+Backend desarrollado con arquitectura hexagonal usando Express y Firebase Firestore para la empresa Atom.
+
+Desarrollador por: 
+Arony Salvador Noguera
+salvadorarony@gmail.com
 
 ## Características
 
@@ -35,6 +39,8 @@ npm install
 - Generar el archivo serviceAccountKey.json
 - Colocar el archivo en la raíz del proyecto
 
+4. Solicitar .env si desea levantar proyecto localmente al correo salvadorarony@gmail.com
+
 ## Desarrollo
 
 Para desarrollo local:
@@ -52,17 +58,15 @@ npm start
 
 ### Usuarios
 - POST `/api/users` - Crear usuario
-- GET `/api/users` - Obtener todos los usuarios
+- POST `/api/users/login` - Obtener toker sin tener usuario
 - GET `/api/users/:id` - Obtener usuario por ID
-- PUT `/api/users/:id` - Actualizar usuario
-- DELETE `/api/users/:id` - Eliminar usuario
+
 
 ### Tareas
 - POST `/api/tasks` - Crear tarea
 - GET `/api/tasks/user/:userId` - Obtener tareas por usuario
 - PUT `/api/tasks/:id` - Actualizar tarea
 - DELETE `/api/tasks/:id` - Eliminar tarea
-- PATCH `/api/tasks/:id/status` - Actualizar estado de tarea
 
 ## Estructura del Proyecto
 
@@ -73,6 +77,6 @@ src/
 └── infrastructure/ # Implementaciones concretas
 ```
 
-## Licencia
+## TEST
 
-MIT 
+Se aplicaron test unitarios utilizando JEST, aplicado solamente a los controler
